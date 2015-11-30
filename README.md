@@ -5,7 +5,7 @@ This plugin adds a data table for showing hate crimes to Wordpress and depends o
 
 The tables are based on [DataTables](https://datatables.net/) and allow searching and filtering of all the registers.
 
-It's also possible to show the map without Wordpress using the included index.html file and making reference to a custom json data source.
+It's also possible to show the map without Wordpress using the included index.html file and making reference to a custom [json data source](https://raw.githubusercontent.com/geraldo/hatecrimes-child/master/hatecrimes.js).
 
 See related resources:
   1. [Wordpress plugin for mapping hate crimes: Custom post type Hate Crime](https://github.com/geraldo/hatecrimes)
