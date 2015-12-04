@@ -15,11 +15,11 @@ jQuery(document).ready(function($) {
 					<td>'+item.category+'</td>\
 					<td>'+item.city+'</td>\
 					<td>'+item.province+'</td>\
+					<td>'+item.sentence+'</td>\
+					<td>'+item.delict+'</td>\
 				</tr>').appendTo($("#crims tbody"));
 					//<td>'+feature.geometry.coordinates[1]+'</td>\
 					//<td>'+feature.geometry.coordinates[0]+'</td>\
-					//<td>'+item.sentence+'</td>\
-					//<td>'+item.legal+'</td>\
 					//<td>'+item.age+'</td>\
 			});
 
