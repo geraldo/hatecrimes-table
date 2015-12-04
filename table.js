@@ -27,7 +27,21 @@ jQuery(document).ready(function($) {
 				"aLengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
 				"iDisplayLength": 20,
 				"aaSorting": [[ 1, "desc" ]],
-				"sPaginationType": "full_numbers"
+				"sPaginationType": "full_numbers",
+				"oLanguage": {
+					"sLengthMenu": "Muestra _MENU_ registros por página",
+					"sZeroRecords": "No encontrado nada - lo siento",
+					"sInfo": "Muestra _START_ hasta _END_ de _TOTAL_ registros",
+					"sInfoEmpty": "Muestra 0 hasta 0 de 0 registros",
+					"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+					"sSearch" : "Buscar:",
+					"oPaginate": {
+						"sPrevious": "Página previa",
+						"sNext": "Próxima página",
+						"sFirst": "Primera página",
+						"sLast": "Última página"
+					}
+				},
 			});
 		})
 	    .fail(function(data) {    
