@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
 	// Fetch, process and display geoJSON.
 	$.when(
-		$.getJSON("http://crimenesdeodio.info/wp-content/export/hatecrimes.js", {})   
+		$.getJSON("/getjson", {})   
 		.done (function( data ) {
 
 			$.each( data.features, function( id, feature ) {
@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 				//console.log(feature.properties);
 				
 				$('<tr id="'+item.id+'">\
-					<td><a target="_parent" href="http://crimenesdeodio.info/index.php?p='+item.id+'">'+item.title+'</a></td>\
+					<td><a target="_parent" href="/index.php?p='+item.id+'">'+item.title+'</a></td>\
 					<td>'+item.date+'</td>\
 					<td>'+item.category+'</td>\
 					<td>'+item.city+'</td>\
@@ -28,7 +28,10 @@ jQuery(document).ready(function($) {
 				"iDisplayLength": 20,
 				"aaSorting": [[ 1, "desc" ]],
 				"sPaginationType": "full_numbers",
-				"oLanguage": {
+				"language": {
+	                "url": "/wp-content/plugins/hatecrimes-table/lib/dataTables."+getLang()+".lang"
+	            },
+				/*"oLanguage": {
 					"sLengthMenu": "Muestra _MENU_ registros por página",
 					"sZeroRecords": "No encontrado nada - lo siento",
 					"sInfo": "Muestra _START_ hasta _END_ de _TOTAL_ registros",
@@ -41,7 +44,7 @@ jQuery(document).ready(function($) {
 						"sFirst": "Primera página",
 						"sLast": "Última página"
 					}
-				},
+				},*/
 			});
 		})
 	    .fail(function(data) {    
@@ -50,4 +53,20 @@ jQuery(document).ready(function($) {
 	).then(function() { 
 		console.log("json loaded!");
 	});
+
+	//get language from URL
+	function getLang() {
+		var language = "Spanish";
+		var loc = window.location.href;
+		var url = "crimenesdeodio.info"
+		var pos1 = loc.indexOf(url);
+		loc = loc.substring(pos1+url.length+1);
+		loc = loc.split("/");
+		if (loc[0] == "en") {
+			language = "English";
+		} else if (loc[0] == "ca") {
+			language = "Catalan";
+		}
+		return language;
+	}
 });
