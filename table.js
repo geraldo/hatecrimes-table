@@ -48,7 +48,49 @@ jQuery(document).ready(function($) {
 				initComplete: function () {
 					console.log("datatable initialized");
 		            this.api().columns().every( function (i) {
-		            	if (i > 1) {
+		            	if (i === 1) {
+		            		// date, show only year value
+		            		// type, split up column data and search for containing value
+			                var column = this;
+			                var select = $('<select><option value=""></option></select>')
+			                    .appendTo( $(column.header()) )
+			                    .on( 'change', function () {
+			                        var val = $.fn.dataTable.util.escapeRegex(
+			                            $(this).val()
+			                        );
+
+			                        column
+			                            .search( val )
+			                            .draw();
+			                    } );
+			 
+			                var data = getYears(column.data().unique().sort());
+			                for (key in data) {
+			                	select.append( '<option value="'+data[key]+'">'+data[key]+'</option>' )
+			                }
+		            	}
+		            	else if (i === 2) {
+		            		// type, split up column data and search for containing value
+			                var column = this;
+			                var select = $('<select><option value=""></option></select>')
+			                    .appendTo( $(column.header()) )
+			                    .on( 'change', function () {
+			                        var val = $.fn.dataTable.util.escapeRegex(
+			                            $(this).val()
+			                        );
+
+			                        column
+			                            .search( val )
+			                            .draw();
+			                    } );
+			 
+			                var data = splitContent(column.data().unique().sort());
+			                for (key in data) {
+			                	select.append( '<option value="'+data[key]+'">'+data[key]+'</option>' )
+			                }
+			            }
+		            	else if (i > 2) {
+		            		// all other columns, search for exact value
 			                var column = this;
 			                var select = $('<select><option value=""></option></select>')
 			                    .appendTo( $(column.header()) )
@@ -91,5 +133,27 @@ jQuery(document).ready(function($) {
 			language = "Catalan";
 		}
 		return language;
+	}
+
+	function splitContent(data) {
+		var result = {};
+		data.each( function ( d, j ) {
+			d.split(',').forEach(function(ele) {
+				result[ele.trim()] = ele.trim();
+			});
+		});
+
+		// falta sort!
+		return result;
+	}
+
+	function getYears(data) {
+		var result = {};
+		data.each( function ( d, j ) {
+			result[d.substring(6)] = d.substring(6);
+		});
+
+		// falta sort!
+		return result;
 	}
 });
