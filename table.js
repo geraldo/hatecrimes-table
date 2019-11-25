@@ -46,7 +46,6 @@ jQuery(document).ready(function($) {
 					}
 				},*/
 				initComplete: function () {
-					console.log("datatable initialized");
 		            this.api().columns().every( function (i) {
 		            	if (i === 1) {
 		            		// date, show only year value
