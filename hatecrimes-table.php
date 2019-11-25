@@ -8,8 +8,8 @@ Text Domain: hatecrimes
 */
 
 //if (is_page_template("table-template.php")) {
-	wp_enqueue_style('datatables-css', plugins_url('lib/jquery.dataTables.min.css', __FILE__ ));
-	wp_enqueue_script('datatables-js', plugins_url('lib/jquery.dataTables.min.js', __FILE__ ), array( 'jquery' ) );
+	wp_enqueue_style('datatables-css', 'https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css');
+	wp_enqueue_script('datatables-js', 'https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js', array( 'jquery' ) );
 
 	/* pass language function to javascript */
 	wp_enqueue_script('tables-js', plugins_url('table.js', __FILE__ ));

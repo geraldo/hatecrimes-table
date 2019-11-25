@@ -45,6 +45,29 @@ jQuery(document).ready(function($) {
 						"sLast": "Última página"
 					}
 				},*/
+				initComplete: function () {
+					console.log("datatable initialized");
+		            this.api().columns().every( function (i) {
+		            	if (i > 1) {
+			                var column = this;
+			                var select = $('<select><option value=""></option></select>')
+			                    .appendTo( $(column.header()) )
+			                    .on( 'change', function () {
+			                        var val = $.fn.dataTable.util.escapeRegex(
+			                            $(this).val()
+			                        );
+			 
+			                        column
+			                            .search( val ? '^'+val+'$' : '', true, false )
+			                            .draw();
+			                    } );
+			 
+			                column.data().unique().sort().each( function ( d, j ) {
+			                    select.append( '<option value="'+d+'">'+d+'</option>' )
+			                } );
+			            }
+		            } );
+		        }
 			});
 		})
 	    .fail(function(data) {    
