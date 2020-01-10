@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
 	// Fetch, process and display geoJSON.
 	$.when(
-		$.getJSON("/getjson", {})   
+		$.getJSON("/"+getLang(false)+"/getjson", {})   
 		.done (function( data ) {
 
 			$.each( data.features, function( id, feature ) {
@@ -31,21 +31,7 @@ jQuery(document).ready(function($) {
 				"language": {
 	                "url": "/wp-content/plugins/hatecrimes-table/lib/dataTables."+getLang()+".lang"
 	            },
-				/*"oLanguage": {
-					"sLengthMenu": "Muestra _MENU_ registros por página",
-					"sZeroRecords": "No encontrado nada - lo siento",
-					"sInfo": "Muestra _START_ hasta _END_ de _TOTAL_ registros",
-					"sInfoEmpty": "Muestra 0 hasta 0 de 0 registros",
-					"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-					"sSearch" : "Buscar:",
-					"oPaginate": {
-						"sPrevious": "Página previa",
-						"sNext": "Próxima página",
-						"sFirst": "Primera página",
-						"sLast": "Última página"
-					}
-				},*/
-				initComplete: function () {
+				/*initComplete: function () {
 		            this.api().columns().every( function (i) {
 		            	if (i === 1) {
 		            		// date, show only year value
@@ -108,7 +94,7 @@ jQuery(document).ready(function($) {
 			                } );
 			            }
 		            } );
-		        }
+		        }*/
 			});
 		})
 	    .fail(function(data) {    
@@ -119,8 +105,9 @@ jQuery(document).ready(function($) {
 	});
 
 	//get language from URL
-	function getLang() {
+	function getLang(long=true) {
 		var language = "Spanish";
+		if (!long) language = "es";
 		var loc = window.location.href;
 		var url = "crimenesdeodio.info"
 		var pos1 = loc.indexOf(url);
@@ -128,8 +115,10 @@ jQuery(document).ready(function($) {
 		loc = loc.split("/");
 		if (loc[0] == "en") {
 			language = "English";
+			if (!long) language = "en";
 		} else if (loc[0] == "ca") {
 			language = "Catalan";
+			if (!long) language = "ca";
 		}
 		return language;
 	}
