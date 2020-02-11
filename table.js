@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
 	// Fetch, process and display geoJSON.
 	$.when(
-		$.getJSON("/"+getLang(false)+"/getjson", {})   
+		$.getJSON("/dev/"+getLang(false)+"/geojson", {}) 
 		.done (function( data ) {
 
 			$.each( data.features, function( id, feature ) {
@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 				//console.log(feature.properties);
 				
 				$('<tr id="'+item.id+'">\
-					<td><a target="_parent" href="/index.php?p='+item.id+'">'+item.title+'</a></td>\
+					<td><a target="_parent" href="/dev/index.php?p='+item.id+'">'+item.title+'</a></td>\
 					<td>'+item.date+'</td>\
 					<td>'+item.category+'</td>\
 					<td>'+item.city+'</td>\
@@ -29,9 +29,9 @@ jQuery(document).ready(function($) {
 				"aaSorting": [[ 1, "desc" ]],
 				"sPaginationType": "full_numbers",
 				"language": {
-	                "url": "/wp-content/plugins/hatecrimes-table/lib/dataTables."+getLang()+".lang"
+	                "url": "/dev/wp-content/plugins/hatecrimes-table/lib/dataTables."+getLang()+".lang"
 	            },
-				/*initComplete: function () {
+				initComplete: function () {
 		            this.api().columns().every( function (i) {
 		            	if (i === 1) {
 		            		// date, show only year value
@@ -57,22 +57,34 @@ jQuery(document).ready(function($) {
 		            	else if (i === 2) {
 		            		// type, split up column data and search for containing value
 			                var column = this;
-			                var select = $('<select><option value=""></option></select>')
+			                var select = $('<select class="filterType"><option value=""></option></select>')
 			                    .appendTo( $(column.header()) )
 			                    .on( 'change', function () {
-			                        var val = $.fn.dataTable.util.escapeRegex(
-			                            $(this).val()
-			                        );
 
-			                        column
-			                            .search( val )
-			                            .draw();
+			                    	if ($(this).val() !== null) {
+				                        var val = $.fn.dataTable.util.escapeRegex(
+				                            $(this).val()
+				                        );
+
+				                        column
+				                            .search( val )
+				                            .draw();
+				                    }
 			                    } );
 			 
 			                var data = splitContent(column.data().unique().sort());
 			                for (key in data) {
-			                	select.append( '<option value="'+data[key]+'">'+data[key]+'</option>' )
+			                	select.append( '<option value="'+key+'">'+data[key]+'</option>' )
 			                }
+
+							// filter from get parameter?
+							let params = new URLSearchParams(document.location.search.substring(1));
+							let type = params.get("type");
+
+							if (type !== null) {
+								$(".filterType").val(type);
+								$(".filterType").change();
+							}
 			            }
 		            	else if (i > 2) {
 		            		// all other columns, search for exact value
@@ -94,7 +106,7 @@ jQuery(document).ready(function($) {
 			                } );
 			            }
 		            } );
-		        }*/
+		        }
 			});
 		})
 	    .fail(function(data) {    
@@ -109,7 +121,7 @@ jQuery(document).ready(function($) {
 		var language = "Spanish";
 		if (!long) language = "es";
 		var loc = window.location.href;
-		var url = "crimenesdeodio.info"
+		var url = "crimenesdeodio.info/dev"
 		var pos1 = loc.indexOf(url);
 		loc = loc.substring(pos1+url.length+1);
 		loc = loc.split("/");
